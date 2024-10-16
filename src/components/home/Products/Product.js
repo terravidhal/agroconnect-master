@@ -33,7 +33,7 @@ const Product = (props) => {
           <Image className="w-full h-full" imgSrc={props.img} />
         </div>
         <div className="absolute top-6 left-8">
-          {props.badge && <Badge text="New" />}
+          {props.badge && <Badge text="Certified" />}
         </div>
         <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
           <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
