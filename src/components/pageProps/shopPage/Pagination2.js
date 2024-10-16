@@ -23,7 +23,7 @@ function Items({ currentItems }) {
     queryFn: async () => {
        const { data } = await axios.get(baseUrl+'product/get/',{withCredentials: true});
        console.log("888", data);
-       setProd(data);
+      // setProd(data);
        if (isError) console.log("999",error.message);
        
       return data;
@@ -34,8 +34,8 @@ function Items({ currentItems }) {
 
   return (
     <>
-      {prod &&
-        prod.map((item) => (
+      {productData &&
+        productData.map((item) => (
           <div key={item?._id} className="w-full">
             <Product
               _id={item?._id}
