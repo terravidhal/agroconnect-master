@@ -11,7 +11,7 @@ import baseUrl from "../../../assets/utils/baseUrl";
 const items = paginationItems;
 
 function Items({ currentItems }) {
-
+    const [prod, setProd] = useState([]);
 
   const {
     error,
@@ -23,6 +23,7 @@ function Items({ currentItems }) {
     queryFn: async () => {
        const { data } = await axios.get(baseUrl+'product/get/',{withCredentials: true});
        console.log("888", data);
+       setProd(data);
        if (isError) console.log("999",error.message);
        
       return data;
@@ -33,8 +34,8 @@ function Items({ currentItems }) {
 
   return (
     <>
-      {/* {productData &&
-        productData.map((item) => (
+      {prod &&
+        prod.map((item) => (
           <div key={item?._id} className="w-full">
             <Product
               _id={item?._id}
@@ -46,8 +47,8 @@ function Items({ currentItems }) {
               des={item?.summary}
             />
           </div>
-        ))} */}
-       {currentItems &&
+        ))}
+      {/* {currentItems &&
         currentItems.map((item) => (
           <div key={item._id} className="w-full">
             <Product
@@ -60,12 +61,12 @@ function Items({ currentItems }) {
               des={item.des}
             />
           </div>
-        ))} 
+        ))} */}
     </>
   );
 }
 
-const Pagination = ({ itemsPerPage }) => {
+const Pagination2 = ({ itemsPerPage }) => {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
@@ -117,4 +118,4 @@ const Pagination = ({ itemsPerPage }) => {
   );
 };
 
-export default Pagination;
+export default Pagination2;

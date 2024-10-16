@@ -30,7 +30,7 @@ export const navBarList = [
   //   title: "About",
   //   link: "/about",
   // }
-  {
+  /*{
     _id: 1004,
     title: "service",
     link: "contact",
@@ -39,7 +39,7 @@ export const navBarList = [
     _id: 1005,
     title: "journal",
     link: "/journal",
-  },
+  },*/
 ];
 // =================== NavBarList End here ======================
 // =================== Special Offer data Start here ============

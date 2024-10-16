@@ -14,7 +14,7 @@ import {
     useToast,
     Select,
   } from "@chakra-ui/react";
-  import { useMemo, useState, useRef } from "react";
+  import { useMemo, useState, useRef, useEffect } from "react";
   import axios from "axios";
   import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
   import {
@@ -36,6 +36,7 @@ const CreateProduct = () => {
     const [location, setLocation] = useState("");
     const [category, setCategory] = useState("");
     const [img64, setImg64] = useState("");
+    const [updt, setUpdt] = useState(false);
 
     let userId ="";
    if (localStorage.getItem("usersInfos")) {
@@ -46,12 +47,17 @@ const CreateProduct = () => {
   const queryClient = useQueryClient();
   const inputImageRef = useRef(null);
 
+  useEffect(()=>{
+  console.log("updt");
+  },[updt])
+
 
   const CreateProducts = (productInfos) => {
     axios
       .post(baseUrl + "product" + "/create", productInfos,{withCredentials: true})
       .then((res) => {
         toast.success("task created successfully!!");
+        setUpdt(!updt);
         return res.data;
       })
       .catch((err)=>{
@@ -69,7 +75,7 @@ const CreateProduct = () => {
   } = useMutation({
     mutationFn: CreateProducts,
     onSuccess: () => {
-      queryClient.invalidateQueries(["dataUsers"]);
+      queryClient.invalidateQueries(["datathisOrg2"]);
     },
   });
   
