@@ -56,6 +56,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
+      {/*=======================OSIRIS============================ */}
     </Route>
   )
 );

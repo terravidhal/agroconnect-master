@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/orebiSlice";
-import { FaFacebook, FaYoutube, FaLinkedin, FaGithub, FaWhatsapp, FaTelegram } from "react-icons/fa";
+import { FaFacebook,FaLocationArrow, FaYoutube, FaLinkedin, FaGithub, FaWhatsapp, FaTelegram } from "react-icons/fa";
 const ProductInfo = ({ productInfo }) => {
   const dispatch = useDispatch();
   return (
@@ -47,6 +47,11 @@ const ProductInfo = ({ productInfo }) => {
         <a href="/facebook.com" target="_blank" rel="noreferrer" >
           <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
             <FaFacebook />
+          </li>
+        </a>
+        <a href="https://osiris-eight.vercel.app/" target="_blank" rel="noreferrer" >
+          <li className="w-7 h-7 bg-primeColor text-gray-100 hover:text-white cursor-pointer text-lg rounded-full flex justify-center items-center hover:bg-black duration-300">
+            <FaLocationArrow />
           </li>
         </a>
       </ul>
