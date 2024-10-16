@@ -2,12 +2,52 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import Product from "../../home/Products/Product";
 import { paginationItems } from "../../../constants";
+import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import baseUrl from "../../../assets/utils/baseUrl";
+
 
 const items = paginationItems;
+
 function Items({ currentItems }) {
+
+
+  const {
+    error,
+    data: productData,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["datathisOrg2"],
+    queryFn: async () => {
+       const { data } = await axios.get(baseUrl+'product/get/',{withCredentials: true});
+       console.log("888", data);
+       if (isError) console.log("999",error.message);
+       
+      return data;
+    },
+  });
+
+
+
   return (
     <>
-      {currentItems &&
+      {productData &&
+        productData.map((item) => (
+          <div key={item._id} className="w-full">
+            <Product
+              _id={item._id}
+              img={item.img}
+              productName={item.title}
+              price={item.price}
+              color={"red"}
+              badge={"certified"}
+              des={item.summary}
+            />
+          </div>
+        ))}
+      {/* {currentItems &&
         currentItems.map((item) => (
           <div key={item._id} className="w-full">
             <Product
@@ -20,7 +60,7 @@ function Items({ currentItems }) {
               des={item.des}
             />
           </div>
-        ))}
+        ))} */}
     </>
   );
 }

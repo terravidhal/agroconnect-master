@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BsGridFill } from "react-icons/bs";
 import { ImList } from "react-icons/im";
 import { GoTriangleDown } from "react-icons/go";
+import CreateProduct from "./CreateProduct";
 
 const ProductBanner = ({ itemsPerPageFromBanner }) => {
   //   const [selected, setSelected] = useState("");
@@ -46,6 +47,7 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
         >
           <ImList />
         </span>
+        <CreateProduct />
       </div>
       {/* =========================================================
                             Left Part End here
