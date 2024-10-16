@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from 'sonner';
+import baseUrl from "../../assets/utils/baseUrl";
+
+
 
 const SignIn = () => {
   // ============= Initial State Start here =============
@@ -11,6 +17,37 @@ const SignIn = () => {
   // ============= Error Msg Start here =================
   const [errEmail, setErrEmail] = useState("");
   const [errPassword, setErrPassword] = useState("");
+
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+
+    const register = async (userInfos) => {
+      try {
+        const response = await axios.post(baseUrl + "auth" + "/login", userInfos, {
+          withCredentials: true,
+        });
+        toast.success("register successfully!!");
+        localStorage.setItem("USER_OBJ", JSON.stringify(response.data.user));
+        navigate(`/`); 
+      } catch (err) {
+        toast.error(err.response?.data?.message || "registration failed !!"); 
+      }
+    };
+  
+    const {
+      mutate: registerMutation,
+      isPending,
+      isError,
+      isSuccess,
+      error,
+    } = useMutation({
+      mutationFn: register,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["datatAllOrgs"] });
+      },
+    }); 
 
   // ============= Error Msg End here ===================
   const [successMsg, setSuccessMsg] = useState("");
@@ -36,9 +73,10 @@ const SignIn = () => {
     }
     // ============== Getting the value ==============
     if (email && password) {
-      setSuccessMsg(
-        `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
-      );
+      registerMutation({email, password})
+      // setSuccessMsg(
+      //   `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
+      // );
       setEmail("");
       setPassword("");
     }
@@ -62,7 +100,7 @@ const SignIn = () => {
             </span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">
-                Get started fast with OREBI
+                Get started fast with AGROCONNECT
               </span>
               <br />
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
@@ -75,7 +113,7 @@ const SignIn = () => {
             </span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">
-                Access all OREBI services
+                Access all AGROCONNECT services
               </span>
               <br />
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
@@ -98,7 +136,7 @@ const SignIn = () => {
           <div className="flex items-center justify-between mt-10">
             <Link to="/">
               <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-                © OREBI
+                © AGROCONNECT
               </p>
             </Link>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
@@ -117,7 +155,7 @@ const SignIn = () => {
         {successMsg ? (
           <div className="w-full lgl:w-[500px] h-full flex flex-col justify-center">
             <p className="w-full px-4 py-10 text-green-500 font-medium font-titleFont">
-              {successMsg}
+              {/* {successMsg} */}
             </p>
             <Link to="/signup">
               <button

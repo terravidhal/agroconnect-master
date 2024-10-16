@@ -28,7 +28,7 @@ const Layout = () => {
     <div>
       <Header />
       <HeaderBottom />
-      <SpecialCase />
+      {/* <SpecialCase /> */}
       <ScrollRestoration />
       <Outlet />
       <Footer />

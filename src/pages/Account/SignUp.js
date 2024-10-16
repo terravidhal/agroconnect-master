@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from 'sonner';
+import baseUrl from "../../assets/utils/baseUrl";
+
+
+
+
+
+
 
 const SignUp = () => {
   // ============= Initial State Start here =============
@@ -24,6 +34,51 @@ const SignUp = () => {
   const [errCity, setErrCity] = useState("");
   const [errCountry, setErrCountry] = useState("");
   const [errZip, setErrZip] = useState("");
+
+
+
+  const navigate = useNavigate();
+
+  
+  const queryClient = useQueryClient();
+
+
+  const login = async (userInfos) => {
+    try {
+      const response = await axios.post(baseUrl + "auth" + "/register", userInfos, {
+        withCredentials: true,
+      });
+      toast.success("login successfully!!");        
+      localStorage.setItem("USER_OBJ", JSON.stringify(response.data.user));
+      navigate(`/`); 
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response?.data?.message || "Error login"); // Handle errors gracefully
+    }
+  };
+
+  const {
+    mutate: loginMutation,
+    isPending,
+    isError,
+    isSuccess,
+    error,
+  } = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["datatAllOrgs"] });
+    },
+  }); 
+
+
+
+
+
+
+
+
+
+
   // ============= Error Msg End here ===================
   const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
@@ -115,8 +170,12 @@ const SignUp = () => {
         country &&
         zip
       ) {
+        loginMutation({name : clientName, email, password : password, confirmPassword: password,
+          image : "", phone, address
+        })
+        console.log({ clientName,email,password, address,city,country,zip    })
         setSuccessMsg(
-          `Hello dear ${clientName}, Welcome you to OREBI Admin panel. We received your Sign up request. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
+          `Hello dear ${clientName}, Welcome you to AGROCONNECT Admin panel.`
         );
         setClientName("");
         setEmail("");
@@ -148,7 +207,7 @@ const SignUp = () => {
             </span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">
-                Get started fast with OREBI
+                Get started fast with AGROCONNECT
               </span>
               <br />
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
@@ -161,7 +220,7 @@ const SignUp = () => {
             </span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">
-                Access all OREBI services
+                Access all AGROCONNECT services
               </span>
               <br />
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
@@ -183,7 +242,7 @@ const SignUp = () => {
           </div>
           <div className="flex items-center justify-between mt-10">
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-              © OREBI
+              © AGROCONNECT
             </p>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
               Terms
@@ -379,7 +438,7 @@ const SignUp = () => {
                     type="checkbox"
                   />
                   <p className="text-sm text-primeColor">
-                    I agree to the OREBI{" "}
+                    I agree to the AGROCONNECT{" "}
                     <span className="text-blue-500">Terms of Service </span>and{" "}
                     <span className="text-blue-500">Privacy Policy</span>.
                   </p>
