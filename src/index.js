@@ -15,6 +15,8 @@ import {
 } from '@tanstack/react-query'
 import { Toaster } from "sonner";
 
+// 1. import `ChakraProvider` component
+import { ChakraProvider } from '@chakra-ui/react'
 // Create a client
 const queryClient = new QueryClient()
 
@@ -22,10 +24,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
+    <ChakraProvider>
     <QueryClientProvider client={queryClient}>
       <App />
       <Toaster />
     </QueryClientProvider>
+    </ChakraProvider>
     </PersistGate>
   </Provider>
 );

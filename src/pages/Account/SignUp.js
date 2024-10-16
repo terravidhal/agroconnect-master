@@ -48,7 +48,8 @@ const SignUp = () => {
       const response = await axios.post(baseUrl + "auth" + "/register", userInfos, {
         withCredentials: true,
       });
-      toast.success("login successfully!!");        
+      toast.success("register successfully!!");  
+      console.log(response.data.user);      
       localStorage.setItem("USER_OBJ", JSON.stringify(response.data.user));
       navigate(`/`); 
     } catch (err) {
