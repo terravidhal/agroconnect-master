@@ -107,9 +107,9 @@ const Header = () => {
                           className="text-sm flex flex-col gap-1"
                         >
                           <li className="headerSedenavLi">Produits rural</li>
-                          <li className="headerSedenavLi">Gudgets</li>
-                          <li className="headerSedenavLi">Accessories</li>
-                          <li className="headerSedenavLi">Electronics</li>
+                          <li className="headerSedenavLi">saison</li>
+                          <li className="headerSedenavLi">produit local</li>
+                          <li className="headerSedenavLi"></li>
                           <li className="headerSedenavLi">Others</li>
                         </motion.ul>
                       )}
