@@ -35,15 +35,15 @@ function Items({ currentItems }) {
     <>
       {productData &&
         productData.map((item) => (
-          <div key={item._id} className="w-full">
+          <div key={item?._id} className="w-full">
             <Product
-              _id={item._id}
-              img={item.img}
-              productName={item.title}
-              price={item.price}
+              _id={item?._id}
+              img={item?.image}
+              productName={item?.title}
+              price={item?.price}
               color={"red"}
-              badge={"certified"}
-              des={item.summary}
+              badge="certified"
+              des={item?.summary}
             />
           </div>
         ))}
